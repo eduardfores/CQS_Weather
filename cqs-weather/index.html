@@ -369,11 +369,14 @@
         <script src="js/S3Client.js"></script>
         <script src="js/credentials/credentialsS3.js"></script>
         <script src="js/S3/sqlite-files.js"></script>
+        <script src="js/sqlite/sqlite-worker.js"></script>
     </body>
 </html>
 
 <script>
     var s3 = S3ClientFactory.newClient();
+    var sqlite_worker = createWorker();
     var global_databases = getDBs();
-    console.log(global_databases)
+    var sqlFile = getSQLiteToday(global_databases)
+
 </script>
