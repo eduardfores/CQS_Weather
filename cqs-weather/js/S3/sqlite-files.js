@@ -8,6 +8,7 @@
 }
 
 function getSQLiteToday() {
+    var file;
     var date = getDate();
     var params = {
         Key : "databases/database"+date[0]+"-"+date[1]+"-"+date[2]+".db"

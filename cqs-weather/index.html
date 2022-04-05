@@ -9,6 +9,7 @@
 
         <title>SB Admin 2 - Dashboard</title>
         <!-- Custom fonts for this template-->
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.58.1/codemirror.css">
         <link href="vendor/fontawesome-free/css/all.min.css" rel="stylesheet" type="text/css">
         <link
             href="https://fonts.googleapis.com/css?family=Nunito:200,200i,300,300i,400,400i,600,600i,700,700i,800,800i,900,900i"
@@ -347,6 +348,8 @@
 
         </div>
 
+        <textarea id="commands"></textarea>
+        
         <!-- Bootstrap core JavaScript-->
         <script src="vendor/jquery/jquery.min.js"></script>
         <script src="vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
@@ -364,19 +367,30 @@
         <script src="js/demo/chart-area-demo.js"></script>
         <script src="js/demo/chart-pie-demo.js"></script>
 
+        <!-- SQSLite complementary scripts-->
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.58.1/codemirror.js"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.58.1/mode/sql/sql.min.js"></script>
+    
         <!-- AWS scripts-->
         <script src="https://sdk.amazonaws.com/js/aws-sdk-2.1086.0.min.js"></script>
         <script src="js/S3Client.js"></script>
         <script src="js/credentials/credentialsS3.js"></script>
         <script src="js/S3/sqlite-files.js"></script>
         <script src="js/sqlite/sqlite-worker.js"></script>
-    </body>
+        <script src="js/sqlite/sqlite-load.js"></script>
+
+        </body>
 </html>
 
 <script>
     var s3 = S3ClientFactory.newClient();
     var sqlite_worker = createWorker();
-    var global_databases = getDBs();
-    var sqlFile = getSQLiteToday(global_databases)
-
+    //var global_databases = getDBs();
+    var sqlFile = getSQLiteToday()
+    loadSQLite(sqlite_worker, sqlFile)
+    //sleep
+    /*
+    await sleep(5000) 
+    editor.setValue("SELECT * FROM City;")
+    execute(sqlite_worker, editor.getValue() + ';')*/
 </script>

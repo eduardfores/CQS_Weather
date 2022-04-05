@@ -115,6 +115,7 @@ dbFileElm.onchange = function () {
 			worker.postMessage({ action: 'open', buffer: r.result });
 		}
 	}
+	console.log(f)
 	r.readAsArrayBuffer(f);
 }
 
