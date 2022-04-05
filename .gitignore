@@ -103,4 +103,4 @@ dist
 # TernJS port file
 .tern-port
 
-cqs-weather/js/credentials
+js/credentials
