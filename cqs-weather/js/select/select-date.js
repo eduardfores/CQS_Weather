@@ -10,7 +10,7 @@ function setDateSelectHTML(files, date){
         opt.innerHTML = htmlStr;
         
         if(today == htmlStr){
-            opt.selected="selected"
+            opt.selected="selected";
         }
 
         selectDate.appendChild(opt);
