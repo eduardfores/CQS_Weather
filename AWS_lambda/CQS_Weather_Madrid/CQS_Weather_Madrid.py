@@ -19,6 +19,14 @@ LAT = 40.4165
 LON = -3.7026
 APPID = 'appid_openweathermap'
 
+#London
+#LAT = 51.5085
+#LON = -0.1257
+
+#Paris
+#LAT = 48.8534
+#LON = 2.3488
+
 c = City('Madrid', LAT, LON)
 
 def lambda_handler(event, context):
