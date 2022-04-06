@@ -2,7 +2,7 @@ const setDateSelect = () => {
     var listFiles = s3.listObjectsV2({ Prefix: 'databases/database' }).promise();
 
     listFiles.then(function (data) {
-        setDateSelectHTML(data);
+        setDateSelectHTML(data, getDate());
     })
 }
 

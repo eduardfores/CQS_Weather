@@ -7,7 +7,7 @@
         <meta name="description" content="">
         <meta name="author" content="Eduard Forés Ferrer">
 
-        <title>SB Admin 2 - Dashboard</title>
+        <title>CQS-Weather</title>
         <!-- Custom fonts for this template-->
         <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.58.1/codemirror.css">
         <link href="vendor/fontawesome-free/css/all.min.css" rel="stylesheet" type="text/css">
@@ -23,15 +23,21 @@
 
             <!-- Page Heading -->
             <div class="d-sm-flex align-items-center justify-content-between mb-4">
-                <h1 class="h3 mb-0 text-gray-800">CQS-Weather</h1>
-                <a href="#" class="d-none d-sm-inline-block btn btn-sm btn-primary shadow-sm"><i
-                        class="fas fa-download fa-sm text-white-50"></i> Generate Report</a>
+                <h1 class="h3 mb-0 text-gray-800" style="margin-top: 10px;">CQS-Weather</h1>
             </div>
 
-            <div class="center">
-                <select name="date" id="date"></select>
-                <select name="cities" id="cities"></select>
+            <div class="row">
+                <div class="col-xl-4 col-lg-6" >
+                    <h6 class="m-0 font-weight-bold text-primary">Date:</h6>
+                    <select name="date" id="date"></select>
+                </div>
+                <div class="col-xl-4 col-lg-6" >
+                    <h6 class="m-0 font-weight-bold text-primary">City:</h6>
+                    <select name="cities" id="cities"></select>
+                </div>
             </div>
+            <br>
+            
             <!-- Content Row -->
             <div class="row">
                 
