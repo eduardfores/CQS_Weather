@@ -1,21 +1,21 @@
-const images = ['http://openweathermap.org/img/wn/01d@2x.png', 
-				'http://openweathermap.org/img/wn/02d@2x.png', 
-				'http://openweathermap.org/img/wn/03d@2x.png', 
-				'http://openweathermap.org/img/wn/04d@2x.png',  
-				'http://openweathermap.org/img/wn/09d@2x.png', 
-				'http://openweathermap.org/img/wn/10d@2x.png', 
-				'http://openweathermap.org/img/wn/11d@2x.png', 
-				'http://openweathermap.org/img/wn/13d@2x.png', 
-				'http://openweathermap.org/img/wn/50d@2x.png',
-				'http://openweathermap.org/img/wn/01n@2x.png', 
-				'http://openweathermap.org/img/wn/02n@2x.png', 
-				'http://openweathermap.org/img/wn/03n@2x.png', 
-				'http://openweathermap.org/img/wn/04n@2x.png',  
-				'http://openweathermap.org/img/wn/09n@2x.png', 
-				'http://openweathermap.org/img/wn/10n@2x.png', 
-				'http://openweathermap.org/img/wn/11n@2x.png', 
-				'http://openweathermap.org/img/wn/13n@2x.png', 
-				'http://openweathermap.org/img/wn/50n@2x.png'];
+const images = {'01d':'http://openweathermap.org/img/wn/01d@2x.png', 
+                '02d':'http://openweathermap.org/img/wn/02d@2x.png', 
+                '03d':'http://openweathermap.org/img/wn/03d@2x.png', 
+                '04d':'http://openweathermap.org/img/wn/04d@2x.png',  
+                '09d':'http://openweathermap.org/img/wn/09d@2x.png', 
+                '10d':'http://openweathermap.org/img/wn/10d@2x.png', 
+                '11d':'http://openweathermap.org/img/wn/11d@2x.png', 
+                '13d':'http://openweathermap.org/img/wn/13d@2x.png', 
+                '50d':'http://openweathermap.org/img/wn/50d@2x.png',
+				'01n':'http://openweathermap.org/img/wn/01n@2x.png', 
+                '02n':'http://openweathermap.org/img/wn/02n@2x.png', 
+                '03n':'http://openweathermap.org/img/wn/03n@2x.png', 
+                '04n':'http://openweathermap.org/img/wn/04n@2x.png',  
+                '09n':'http://openweathermap.org/img/wn/09n@2x.png', 
+                '10n':'http://openweathermap.org/img/wn/10n@2x.png', 
+                '11n':'http://openweathermap.org/img/wn/11n@2x.png', 
+                '13n':'http://openweathermap.org/img/wn/13n@2x.png', 
+                '50n':'http://openweathermap.org/img/wn/50n@2x.png'};
 
 // Set new default font family and font color to mimic Bootstrap's default styling
 Chart.defaults.global.defaultFontFamily = 'Nunito', '-apple-system,system-ui,BlinkMacSystemFont,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif';
@@ -25,7 +25,13 @@ Chart.defaults.global.defaultFontColor = '#858796';
 var ctx = document.getElementById("areaTemp");
 var myLineChart;
 
-function setTempChart(dataTemp, dataFeels){
+function setTempChart(dataTemp, dataFeels, dataIcons){
+
+    var imagesActual = []
+
+    for( let icon of dataIcons){
+        imagesActual.push(images[icon])
+    }
 
     myLineChart = new Chart(ctx, {
         plugins: [{
@@ -33,13 +39,13 @@ function setTempChart(dataTemp, dataFeels){
               var ctx = chart.chart.ctx; 
               var xAxis = chart.scales['x-axis-0'];
               var yAxis = chart.scales['y-axis-0'];
-              xAxis.ticks.forEach((value, index) => {  
+              xAxis.ticks.forEach((value, index) => { 
                 var x = xAxis.getPixelForTick(index);
                 var image = new Image();
-                image.src = images[index];
+                image.src = imagesActual[index];
                 image.height=10;
                 image.width=10;
-                ctx.drawImage(image, x - 50, yAxis.bottom + 10, 50, 50);
+                ctx.drawImage(image, x - 25, yAxis.bottom+20, 50, 50);
               });      
             }
           }],

@@ -46,20 +46,17 @@ function loadSQLInChart(worker, commands) {
 			return;
 		}
 
-		console.log(results)
-
-		loadTemp(results[0].values);
+		loadTemp(worker, results[0].values);
 		loadHumidity(results[0].values)
 		loadPressure(results[0].values)
-
-		getWeather(worker, results[0].values)
 	}
 	worker.postMessage({ action: 'exec', sql: commands });
 }
 
-function loadTemp(hourly){
+function loadTemp(worker, hourly){
 	var arrayTemp = []
 	var arrayFeels = []
+
 	for(var i=0; i < hourly.length; i++){
 		arrayTemp.push(hourly[i][1])
 	}
@@ -68,7 +65,8 @@ function loadTemp(hourly){
 		arrayFeels.push(hourly[i][2])
 	}
 
-	setTempChart(arrayTemp, arrayFeels)
+	getWeather(worker, hourly, arrayTemp, arrayFeels)
+
 }
 
 function loadHumidity(hourly){
@@ -90,10 +88,13 @@ function loadPressure(hourly){
 	setPressureChart(arrayPressure)
 }
 
-function getWeather(worker, hourly) {
+function getWeather(worker, hourly, arrayTemp, arrayFeels) {
+
+	var arrayWeather = []
 
 	worker.onmessage = function (event) {
 		var results = event.data.results;
+		var arrayIcon = []
 
 		if (!results) {
 			error({message: event.data.error});
@@ -101,16 +102,27 @@ function getWeather(worker, hourly) {
 		}
 
 		console.log(results)
-
+		for(var i=0; i < results[0].values.length; i++){
+			arrayIcon.push(results[0].values[i][4])
+		}
+		
+		setTempChart(arrayTemp, arrayFeels, arrayIcon)
 	}
-
-	var arrayWeather = []
 
 	for(var i=0; i < hourly.length; i++){
 		arrayWeather.push(hourly[i][8])
 	}
 
-	var command = "SELECT * FROM Weather WHERE id IN (" + arrayWeather +");";
+	console.log(arrayWeather)
 
+	var command = "SELECT * FROM Weather WHERE id IN (" + arrayWeather +") ORDER BY case ";
+
+	for(var i=0; i < arrayWeather.length; i++){
+		command += " WHEN id="+arrayWeather[i]+" THEN "+i;
+	}
+
+	command += " end ASC;"
+
+	console.log(command)
 	worker.postMessage({ action: 'exec', sql: command });
 }
