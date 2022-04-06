@@ -111,11 +111,12 @@
         <script src="https://sdk.amazonaws.com/js/aws-sdk-2.1086.0.min.js"></script>
         <script src="js/S3Client.js"></script>
         <script src="js/credentials/credentialsS3.js"></script>
-        <script src="js/S3/sqlite-files.js"></script>
+        <script src="js/S3/s3-files.js"></script>
         <script src="js/sqlite/sqlite-worker.js"></script>
         <script src="js/sqlite/sqlite-load.js"></script>
         <script src="js/select/select-listeners.js"></script>
         <script src="js/select/select-city.js"></script>
+        <script src="js/select/select-date.js"></script>
 
         </body>
 </html>
@@ -124,8 +125,8 @@
     var s3 = S3ClientFactory.newClient();
     setDateSelect();
     var sqlite_worker = createWorker();
-    var sqlFile = getSQLiteToday()
-    loadSQLite(sqlite_worker, sqlFile)
+    var sqlFile = getSQLiteToday();
+    loadSQLite(sqlite_worker, sqlFile);
 
     setCityListener(sqlite_worker);
     setDateListener(sqlite_worker);

@@ -2,18 +2,11 @@ const setDateSelect = () => {
     var listFiles = s3.listObjectsV2({ Prefix: 'databases/database' }).promise();
 
     listFiles.then(function (data) {
-        var selectDate = document.getElementById("date");
-
-        for (var i = 0; i<data.Contents.length; i++){
-            var opt = document.createElement('option');
-            opt.value = data.Contents[i].Key;
-            opt.innerHTML = data.Contents[i].Key.replace('databases/database','').replace('.db','');
-            selectDate.appendChild(opt);
-        }
+        setDateSelectHTML(data);
     })
 }
 
-function getSQLiteDate(event) {
+function getSQLiteData(event) {
     var worker = event.currentTarget.worker;
     var date = document.getElementById("date").value;
 

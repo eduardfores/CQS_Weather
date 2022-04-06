@@ -15,7 +15,7 @@ function loadSQLite(worker, sqlFile){
 	}
 
 	sqlFile.then( function (data) {
-        var blob = new Blob([data.Body], {type: 'binary/octet-stream'})
+        var blob = new Blob([data.Body], {type: 'binary/octet-stream'});
         r.readAsArrayBuffer(blob);
     })
 }
@@ -48,9 +48,9 @@ function loadCities(worker){
 			return;
 		}
 
-		setCitySelect(results[0].values)
+		setCitySelect(results[0].values);
 
-		loadSQLInChart(worker, "SELECT * FROM Hourly WHERE cityIdRef = 1 ORDER BY date;")
+		loadSQLInChart(worker, "SELECT * FROM Hourly WHERE cityIdRef = 1 ORDER BY date;");
 	}
 
 	worker.postMessage({ action: 'exec', sql: commands });
@@ -67,35 +67,35 @@ function loadSQLInChart(worker, commands) {
 		}
 
 		loadTemp(worker, results[0].values);
-		loadHumidity(results[0].values)
-		loadPressure(results[0].values)
+		loadHumidity(results[0].values);
+		loadPressure(results[0].values);
 	}
 	worker.postMessage({ action: 'exec', sql: commands });
 }
 
 function loadTemp(worker, hourly){
-	var arrayTemp = []
-	var arrayFeels = []
+	var arrayTemp = [];
+	var arrayFeels = [];
 
 	for(var i=0; i < hourly.length; i++){
-		arrayTemp.push(hourly[i][1])
+		arrayTemp.push(hourly[i][1]);
 	}
 
 	for(var i=0; i < hourly.length; i++){
-		arrayFeels.push(hourly[i][2])
+		arrayFeels.push(hourly[i][2]);
 	}
 
-	getWeather(worker, hourly, arrayTemp, arrayFeels)
+	getWeather(worker, hourly, arrayTemp, arrayFeels);
 
 }
 
 function getWeather(worker, hourly, arrayTemp, arrayFeels) {
 
-	var arrayWeather = []
+	var arrayWeather = [];
 
 	worker.onmessage = function (event) {
 		var results = event.data.results;
-		var arrayIcon = []
+		var arrayIcon = [];
 
 		if (!results) {
 			error({message: event.data.error});
@@ -103,14 +103,14 @@ function getWeather(worker, hourly, arrayTemp, arrayFeels) {
 		}
 
 		for(var i=0; i < results[0].values.length; i++){
-			arrayIcon.push(results[0].values[i][4])
+			arrayIcon.push(results[0].values[i][4]);
 		}
 		
-		setTempChart(arrayTemp, arrayFeels, arrayIcon)
+		setTempChart(arrayTemp, arrayFeels, arrayIcon);
 	}
 
 	for(var i=0; i < hourly.length; i++){
-		arrayWeather.push(hourly[i][8])
+		arrayWeather.push(hourly[i][8]);
 	}
 
 	var command = "SELECT * FROM Weather WHERE id IN (" + arrayWeather +") ORDER BY case ";
@@ -119,7 +119,7 @@ function getWeather(worker, hourly, arrayTemp, arrayFeels) {
 		command += " WHEN id="+arrayWeather[i]+" THEN "+i;
 	}
 
-	command += " end ASC;"
+	command += " end ASC;";
 
 	worker.postMessage({ action: 'exec', sql: command });
 }
@@ -127,25 +127,25 @@ function getWeather(worker, hourly, arrayTemp, arrayFeels) {
 function loadHumidity(hourly){
 	var arrayHumidity = []
 	for(var i=0; i < hourly.length; i++){
-		arrayHumidity.push(hourly[i][4])
+		arrayHumidity.push(hourly[i][4]);
 	}
 
-	setHumidityChart(arrayHumidity)
+	setHumidityChart(arrayHumidity);
 }
 
 function loadPressure(hourly){
-	var arrayPressure = []
+	var arrayPressure = [];
 
 	for(var i=0; i < hourly.length; i++){
-		arrayPressure.push(hourly[i][3])
+		arrayPressure.push(hourly[i][3]);
 	}
 
-	setPressureChart(arrayPressure)
+	setPressureChart(arrayPressure);
 }
 
 function loadNewCity(event){
-	var city = document.getElementById("cities").value
-	var commands = "SELECT * FROM City WHERE name = '"+city+"';"
+	var city = document.getElementById("cities").value;
+	var commands = "SELECT * FROM City WHERE name = '"+city+"';";
 
 	var worker = event.currentTarget.worker;
 	worker.onmessage = function (event) {
