@@ -65,7 +65,6 @@ function setCitySelect(cities){
 		opt.innerHTML = cities[i][1];
 		selectCity.appendChild(opt);
 	}
-	
 }
 
 function loadSQLInChart(worker, commands) {
@@ -155,3 +154,22 @@ function loadPressure(hourly){
 	setPressureChart(arrayPressure)
 }
 
+function loadNewCity(event){
+	var city = document.getElementById("cities").value
+	var commands = "SELECT * FROM City WHERE name = '"+city+"';"
+
+	var worker = event.currentTarget.worker;
+	worker.onmessage = function (event) {
+		var results = event.data.results;
+
+		if (!results) {
+			error({message: event.data.error});
+			return;
+		}
+
+		loadSQLInChart(worker, "SELECT * FROM Hourly WHERE cityIdRef = "+results[0].values[0][0]+" ORDER BY date;")
+		
+	}
+
+	worker.postMessage({ action: 'exec', sql: commands });
+}

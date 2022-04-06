@@ -114,6 +114,7 @@
         <script src="js/S3/sqlite-files.js"></script>
         <script src="js/sqlite/sqlite-worker.js"></script>
         <script src="js/sqlite/sqlite-load.js"></script>
+        <script src="js/select/select-listeners.js"></script>
 
         </body>
 </html>
@@ -124,4 +125,6 @@
     var sqlite_worker = createWorker();
     var sqlFile = getSQLiteToday()
     loadSQLite(sqlite_worker, sqlFile)
+
+    setCityListener(sqlite_worker);
 </script>
