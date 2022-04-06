@@ -3,3 +3,9 @@ function setCityListener(sqlite_worker){
     cities.addEventListener("change", loadNewCity, false);
     cities.worker = sqlite_worker
 }
+
+function setDateListener(sqlite_worker){
+    var date = document.getElementById("date")
+    date.addEventListener("change", getSQLiteDate, false);
+    date.worker = sqlite_worker;
+}

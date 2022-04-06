@@ -1,9 +1,4 @@
-/**
- * This function return all posts saved in the /posts directory from our S3.
- * 
- * @returns data object (json) with posts from S3
- */
- const setDateSelect = () => {
+const setDateSelect = () => {
     var listFiles = s3.listObjectsV2({ Prefix: 'databases/database' }).promise();
 
     listFiles.then(function (data) {
@@ -16,6 +11,21 @@
             selectDate.appendChild(opt);
         }
     })
+}
+
+function getSQLiteDate(event) {
+    var worker = event.currentTarget.worker;
+    var date = document.getElementById("date").value;
+
+    var params = {
+        Key : date
+    }
+    
+    destroyTempChart();
+    destroyPressureChart();
+    destroyHumidityChart();
+    removeCitySelect();
+    loadSQLite(worker, s3.getObject(params).promise());
 }
 
 function getSQLiteToday() {

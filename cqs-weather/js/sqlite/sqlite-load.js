@@ -56,17 +56,6 @@ function loadCities(worker){
 	worker.postMessage({ action: 'exec', sql: commands });
 }
 
-function setCitySelect(cities){
-	selectCity = document.getElementById("cities");
-
-	for (var i = 0; i<cities.length; i++){
-		var opt = document.createElement('option');
-		opt.value = cities[i][1];
-		opt.innerHTML = cities[i][1];
-		selectCity.appendChild(opt);
-	}
-}
-
 function loadSQLInChart(worker, commands) {
 
 	worker.onmessage = function (event) {
