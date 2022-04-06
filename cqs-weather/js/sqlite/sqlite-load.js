@@ -31,9 +31,41 @@ function loadFile(worker, commands) {
 			return;
 		} 
 
-		loadSQLInChart(worker, "SELECT * FROM Hourly ORDER BY date;")
+		loadCities(worker)
 	}
 	worker.postMessage({ action: 'exec', sql: commands });
+}
+
+function loadCities(worker){
+
+	var commands = "SELECT * FROM City;"
+
+	worker.onmessage = function (event) {
+		var results = event.data.results;
+
+		if (!results) {
+			error({message: event.data.error});
+			return;
+		}
+
+		setCitySelect(results[0].values)
+
+		loadSQLInChart(worker, "SELECT * FROM Hourly WHERE cityIdRef = 1 ORDER BY date;")
+	}
+
+	worker.postMessage({ action: 'exec', sql: commands });
+}
+
+function setCitySelect(cities){
+	selectCity = document.getElementById("cities");
+
+	for (var i = 0; i<cities.length; i++){
+		var opt = document.createElement('option');
+		opt.value = cities[i][1];
+		opt.innerHTML = cities[i][1];
+		selectCity.appendChild(opt);
+	}
+	
 }
 
 function loadSQLInChart(worker, commands) {
@@ -69,6 +101,41 @@ function loadTemp(worker, hourly){
 
 }
 
+function getWeather(worker, hourly, arrayTemp, arrayFeels) {
+
+	var arrayWeather = []
+
+	worker.onmessage = function (event) {
+		var results = event.data.results;
+		var arrayIcon = []
+
+		if (!results) {
+			error({message: event.data.error});
+			return;
+		}
+
+		for(var i=0; i < results[0].values.length; i++){
+			arrayIcon.push(results[0].values[i][4])
+		}
+		
+		setTempChart(arrayTemp, arrayFeels, arrayIcon)
+	}
+
+	for(var i=0; i < hourly.length; i++){
+		arrayWeather.push(hourly[i][8])
+	}
+
+	var command = "SELECT * FROM Weather WHERE id IN (" + arrayWeather +") ORDER BY case ";
+
+	for(var i=0; i < arrayWeather.length; i++){
+		command += " WHEN id="+arrayWeather[i]+" THEN "+i;
+	}
+
+	command += " end ASC;"
+
+	worker.postMessage({ action: 'exec', sql: command });
+}
+
 function loadHumidity(hourly){
 	var arrayHumidity = []
 	for(var i=0; i < hourly.length; i++){
@@ -88,41 +155,3 @@ function loadPressure(hourly){
 	setPressureChart(arrayPressure)
 }
 
-function getWeather(worker, hourly, arrayTemp, arrayFeels) {
-
-	var arrayWeather = []
-
-	worker.onmessage = function (event) {
-		var results = event.data.results;
-		var arrayIcon = []
-
-		if (!results) {
-			error({message: event.data.error});
-			return;
-		}
-
-		console.log(results)
-		for(var i=0; i < results[0].values.length; i++){
-			arrayIcon.push(results[0].values[i][4])
-		}
-		
-		setTempChart(arrayTemp, arrayFeels, arrayIcon)
-	}
-
-	for(var i=0; i < hourly.length; i++){
-		arrayWeather.push(hourly[i][8])
-	}
-
-	console.log(arrayWeather)
-
-	var command = "SELECT * FROM Weather WHERE id IN (" + arrayWeather +") ORDER BY case ";
-
-	for(var i=0; i < arrayWeather.length; i++){
-		command += " WHEN id="+arrayWeather[i]+" THEN "+i;
-	}
-
-	command += " end ASC;"
-
-	console.log(command)
-	worker.postMessage({ action: 'exec', sql: command });
-}

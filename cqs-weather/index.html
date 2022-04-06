@@ -28,9 +28,13 @@
                         class="fas fa-download fa-sm text-white-50"></i> Generate Report</a>
             </div>
 
+            <div class="center">
+                <select name="date" id="date"></select>
+                <select name="cities" id="cities"></select>
+            </div>
             <!-- Content Row -->
             <div class="row">
-
+                
                 <!-- Area Temp Chart -->
                 <div class="col-xl-8 col-lg-7" >
                     <div class="card shadow mb-4">
@@ -116,8 +120,8 @@
 
 <script>
     var s3 = S3ClientFactory.newClient();
+    setDateSelect();
     var sqlite_worker = createWorker();
-    //var global_databases = getDBs();
     var sqlFile = getSQLiteToday()
     loadSQLite(sqlite_worker, sqlFile)
 </script>
