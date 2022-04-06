@@ -51,6 +51,8 @@ function loadSQLInChart(worker, commands) {
 		loadTemp(results[0].values);
 		loadHumidity(results[0].values)
 		loadPressure(results[0].values)
+
+		getWeather(worker, results[0].values)
 	}
 	worker.postMessage({ action: 'exec', sql: commands });
 }
@@ -86,4 +88,29 @@ function loadPressure(hourly){
 	}
 
 	setPressureChart(arrayPressure)
+}
+
+function getWeather(worker, hourly) {
+
+	worker.onmessage = function (event) {
+		var results = event.data.results;
+
+		if (!results) {
+			error({message: event.data.error});
+			return;
+		}
+
+		console.log(results)
+
+	}
+
+	var arrayWeather = []
+
+	for(var i=0; i < hourly.length; i++){
+		arrayWeather.push(hourly[i][8])
+	}
+
+	var command = "SELECT * FROM Weather WHERE id IN (" + arrayWeather +");";
+
+	worker.postMessage({ action: 'exec', sql: command });
 }
