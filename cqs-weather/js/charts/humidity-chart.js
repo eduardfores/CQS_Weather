@@ -4,12 +4,12 @@ Chart.defaults.global.defaultFontColor = '#858796';
 
 // Area Chart Example
 var ctxHumidity = document.getElementById("areaHumidity");
-var myLineChart;
+var humidityChart;
 
 function setHumidityChart(data){
 
 
-    myLineChart = new Chart(ctxHumidity, {
+    humidityChart = new Chart(ctxHumidity, {
     type: 'line',
     data: {
         labels: ["00", "01", "02", "03", "04", "05", "06", "07", "08", "09", "10", "11", "12", "13", "14", "15", "16", "17", "18", "19", "20", "21", "22", "23"],
@@ -125,4 +125,8 @@ function number_format(number, decimals, dec_point, thousands_sep) {
       s[1] += new Array(prec - s[1].length + 1).join('0');
     }
     return s.join(dec);
-  }
+}
+
+function destroyHumidityChart(){
+    humidityChart.destroy();
+}

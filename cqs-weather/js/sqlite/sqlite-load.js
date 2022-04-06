@@ -167,7 +167,10 @@ function loadNewCity(event){
 			return;
 		}
 
-		loadSQLInChart(worker, "SELECT * FROM Hourly WHERE cityIdRef = "+results[0].values[0][0]+" ORDER BY date;")
+		destroyTempChart();
+		destroyPressureChart();
+		destroyHumidityChart();
+		loadSQLInChart(worker, "SELECT * FROM Hourly WHERE cityIdRef = "+results[0].values[0][0]+" ORDER BY date;");
 		
 	}
 

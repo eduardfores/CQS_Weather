@@ -23,7 +23,7 @@ Chart.defaults.global.defaultFontColor = '#858796';
 
 // Area Chart Example
 var ctx = document.getElementById("areaTemp");
-var myLineChart;
+var tempChart;
 
 function setTempChart(dataTemp, dataFeels, dataIcons){
 
@@ -33,7 +33,7 @@ function setTempChart(dataTemp, dataFeels, dataIcons){
         imagesActual.push(images[icon])
     }
 
-    myLineChart = new Chart(ctx, {
+    tempChart = new Chart(ctx, {
         plugins: [{
             afterDraw: chart => {      
               var ctx = chart.chart.ctx; 
@@ -146,8 +146,6 @@ function setTempChart(dataTemp, dataFeels, dataIcons){
             }
         }
     }});
-
-    myLineChart.resize(600, 600);
 }
 
 function number_format(number, decimals, dec_point, thousands_sep) {
@@ -173,4 +171,8 @@ function number_format(number, decimals, dec_point, thousands_sep) {
       s[1] += new Array(prec - s[1].length + 1).join('0');
     }
     return s.join(dec);
-  }
+}
+
+function destroyTempChart(){
+    tempChart.destroy();
+}
