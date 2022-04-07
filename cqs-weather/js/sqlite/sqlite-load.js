@@ -1,3 +1,9 @@
+/**
+ * This function is called to load the SQLite today 
+ * 
+ * @param {worker} worker 
+ * @param {promise} sqlFile 
+ */
 function loadSQLite(worker, sqlFile){
     var r = new FileReader();
 	r.onload = function () {
@@ -20,7 +26,11 @@ function loadSQLite(worker, sqlFile){
     })
 }
 
-// Run a command in the database
+/**
+ * This function charge the db file and load the cities information of the file 
+ * @param {worker} worker 
+ * @param {string} commands 
+ */
 function loadFile(worker, commands) {
     
 	worker.onmessage = function (event) {
@@ -36,6 +46,10 @@ function loadFile(worker, commands) {
 	worker.postMessage({ action: 'exec', sql: commands });
 }
 
+/**
+ * This function charge the first city information and load the charts
+ * @param {worker} worker 
+ */
 function loadCities(worker){
 
 	var commands = "SELECT * FROM City;"
@@ -56,6 +70,11 @@ function loadCities(worker){
 	worker.postMessage({ action: 'exec', sql: commands });
 }
 
+/**
+ * This function load all charts 
+ * @param {worker} worker 
+ * @param {string} commands 
+ */
 function loadSQLInChart(worker, commands) {
 
 	worker.onmessage = function (event) {
@@ -73,6 +92,11 @@ function loadSQLInChart(worker, commands) {
 	worker.postMessage({ action: 'exec', sql: commands });
 }
 
+/**
+ * This function prepare the dataset to load the temperature chart
+ * @param {worker} worker 
+ * @param {list} hourly 
+ */
 function loadTemp(worker, hourly){
 	var arrayTemp = [];
 	var arrayFeels = [];
@@ -89,6 +113,14 @@ function loadTemp(worker, hourly){
 
 }
 
+/**
+ * This fucntion get the weather data and generate the dataset to load temperature chart
+ * 
+ * @param {worker} worker 
+ * @param {list} hourly 
+ * @param {list} arrayTemp 
+ * @param {list} arrayFeels 
+ */
 function getWeather(worker, hourly, arrayTemp, arrayFeels) {
 
 	var arrayWeather = [];
@@ -124,6 +156,10 @@ function getWeather(worker, hourly, arrayTemp, arrayFeels) {
 	worker.postMessage({ action: 'exec', sql: command });
 }
 
+/**
+ * This funciton load the chart of humidity
+ * @param {list} hourly 
+ */
 function loadHumidity(hourly){
 	var arrayHumidity = []
 	for(var i=0; i < hourly.length; i++){
@@ -133,6 +169,10 @@ function loadHumidity(hourly){
 	setHumidityChart(arrayHumidity);
 }
 
+/**
+ * This function load the chart of pressure
+ * @param {list} hourly 
+ */
 function loadPressure(hourly){
 	var arrayPressure = [];
 
@@ -143,6 +183,11 @@ function loadPressure(hourly){
 	setPressureChart(arrayPressure);
 }
 
+/**
+ * This function load a new City selected in a selector"
+ * 
+ * @param {event} event 
+ */
 function loadNewCity(event){
 	var city = document.getElementById("cities").value;
 	var commands = "SELECT * FROM City WHERE name = '"+city+"';";
