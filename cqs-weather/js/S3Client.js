@@ -1,3 +1,6 @@
+/*
+    his function create a S3Client to access to S3.
+*/
 var S3ClientFactory = {};
 S3ClientFactory.newClient = function (config) {
     var albumBucketName = BUCKET_NAME;

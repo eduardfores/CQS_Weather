@@ -1,3 +1,7 @@
+/**
+ * This function get the database names and create the DateSelect in HTML with these name files
+ * 
+ */
 const setDateSelect = () => {
     var listFiles = s3.listObjectsV2({ Prefix: 'databases/database' }).promise();
 
@@ -6,21 +10,11 @@ const setDateSelect = () => {
     })
 }
 
-function getSQLiteData(event) {
-    var worker = event.currentTarget.worker;
-    var date = document.getElementById("date").value;
-
-    var params = {
-        Key : date
-    }
-    
-    destroyTempChart();
-    destroyPressureChart();
-    destroyHumidityChart();
-    removeCitySelect();
-    loadSQLite(worker, s3.getObject(params).promise());
-}
-
+/**
+ * This funciton return a promise of the database file to charge it in sqlite wasm
+ * 
+ * @returns promise of .db file
+ */
 function getSQLiteToday() {
     var date = getDate();
     var params = {
@@ -29,6 +23,11 @@ function getSQLiteToday() {
     return s3.getObject(params).promise();
 }
 
+/**
+ * This function generate the date of today
+ * 
+ * @returns a list with day, month and year
+ */
 function getDate() {
     var today = new Date();
     var dd = String(today.getDate()).padStart(2, '0');

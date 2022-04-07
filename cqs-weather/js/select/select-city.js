@@ -1,3 +1,8 @@
+/**
+ * This function generate the select HTML of cities
+ * 
+ * @param {list} cities 
+ */
 function setCitySelect(cities){
 	selectCity = document.getElementById("cities");
 
@@ -9,11 +14,18 @@ function setCitySelect(cities){
 	}
 }
 
+/**
+ * Reset the select of cities
+ */
 function removeCitySelect(){
 	selectCity = document.getElementById("cities");
     removeAllChildNodes(selectCity);
 }
 
+/**
+ * This function remove all children of the select cities
+ * @param {Element} parent 
+ */
 function removeAllChildNodes(parent) {
     while (parent.firstChild) {
         parent.removeChild(parent.firstChild);
