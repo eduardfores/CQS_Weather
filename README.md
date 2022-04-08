@@ -5,6 +5,7 @@
 <!-- PROJECT LOGO -->
 <br />
 <div align="center">
+  <img src="https://user-images.githubusercontent.com/552629/76405509-87025300-6388-11ea-86c9-af882abb00bd.png" width="80" height="80" />
   <a href="https://github.com/eduardfores/CQS_Weather/blob/main/README_IMGS/Amazon_Web_Services_Logo.png">
     <img src="README_IMGS/Amazon_Web_Services_Logo.png" alt="Logo" width="80" height="80">
   </a>
