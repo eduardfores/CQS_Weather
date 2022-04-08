@@ -4,7 +4,7 @@ import os
 from datetime import date
 
 today = date.today()
-d1 = today.strftime("%d-%m-%Y")
+d1 = today.strftime("%d-%m-%Y") + datetime.timedelta(days=1)
 
 ACCESS_KEY='S3_ACCESS_KEY'
 SECRET_KEY='S3_SECRET_KEY'
