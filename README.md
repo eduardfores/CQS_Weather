@@ -78,6 +78,37 @@ This section list the frameworks/libraries used to create this blog.
 
 <p align="right">(<a href="#top">back to top</a>)</p>
 
+<!-- GETTING STARTED -->
+## Getting Started
+
+In this section I explain you about how you can import this project to your AWS account to test it. 
+
+### Prerequisites
+
+This is an example of how to install the functions you need to use the software and how to install them.
+
+* S3 configuration
+
+You have to configure S3 with static host endpoint 
+[Hosting Static in AWS](https://docs.aws.amazon.com/AmazonS3/latest/userguide/WebsiteHosting.html)
+
+<p style="color: red"> All files in this bucket must be PUBLIC </p>
+
+* SQS configuration
+
+You must create a standard queue in SQS service
+[Create queue in AWS](https://docs.aws.amazon.com/AWSSimpleQueueService/latest/SQSDeveloperGuide/sqs-configure-create-queue.html)
+
+<p style="color: red"> You can create a FIFO queue but for this project is not necessary </p>
+
+* IAM premissions
+
+You must create one user to give permissions to put files in S3 you can use the file [PutObject.json](https://github.com/eduardfores/CQS_Weather/blob/main/AWS_permissions/PutObject.json) to create these permissions. This user will used fom the Lambda function to save the .db files in /databases directory of your S3 Bucket. The ACCESS_KEY and SECRET_KEY have to be add in the python file [S3 Client](https://github.com/eduardfores/CQS_Weather/blob/main/AWS_lambda/CQS_Weather_SQLite3/s3_client.py).
+
+Other user necessary for this project is one user with the permissions in SQS to administrate the queue you can use the default policy created by AWS with full access in SQS the name of this policy is *AmazonSQSFullAccess*. The ACCESS_KEY and SECRET_KEY have to be add in the python files [SQS Client](https://github.com/eduardfores/CQS_Weather/blob/main/AWS_lambda/CQS_Weather_SQLite3/sqs_client.py) and [CQS_Weather_Madrid](https://github.com/eduardfores/CQS_Weather/blob/main/AWS_lambda/CQS_Weather_Madrid/CQS_Weather_Madrid.py).
+
+The credentials to read S3 from the HTML you have to fill the information of [credentials.js](https://github.com/eduardfores/CQS_blog/blob/main/js/credentials/credentials.js). In this case we don't need a user because we use the cognito-identity directly. The permisions for this new rol can be [ListObject.json](https://github.com/eduardfores/CQS_blog/blob/main/AWS_permissions/ListObject.json)
+
 <!-- LICENSE -->
 ## License
 
