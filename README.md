@@ -69,6 +69,7 @@ This section list the frameworks/libraries used to create this blog.
 * [S3 AWS](https://aws.amazon.com/es/s3/)
 * [Lambda AWS](https://aws.amazon.com/es/lambda/)
 * [SQS AWS](https://aws.amazon.com/es/sqs/)
+* [EventBridge AWS](https://aws.amazon.com/es/eventbridge/)
 * [JavaScript](https://www.javascript.com/)
 * [SQLite](https://sql.js.org/)
 * [Python](https://www.python.org/)
@@ -108,6 +109,23 @@ You must create one user to give permissions to put files in S3 you can use the 
 Other user necessary for this project is one user with the permissions in SQS to administrate the queue you can use the default policy created by AWS with full access in SQS the name of this policy is *AmazonSQSFullAccess*. The ACCESS_KEY and SECRET_KEY have to be add in the python files [SQS Client](https://github.com/eduardfores/CQS_Weather/blob/main/AWS_lambda/CQS_Weather_SQLite3/sqs_client.py) and [CQS_Weather_Madrid](https://github.com/eduardfores/CQS_Weather/blob/main/AWS_lambda/CQS_Weather_Madrid/CQS_Weather_Madrid.py).
 
 The credentials to read S3 from the HTML you have to fill the information of [credentials.js](https://github.com/eduardfores/CQS_Weather/blob/main/cqs-weather/js/credentials/credentials.js). In this case we don't need a user because we use the cognito-identity directly. The permisions for this new rol can be [ListObject.json](https://github.com/eduardfores/CQS_Weather/blob/main/AWS_Permissions/ListObject.json)
+
+### Installation
+
+_Below is the instructions to install the the application in AWS Step by step._
+
+1. Upload all files related with the Web page in S3 bucket configured previouslly. You must upload all content of [cqs-weather]https://github.com/eduardfores/CQS_Weather/tree/main/cqs-weather) directory in the root of the Bucket.
+ 
+2. Create 1 lambda function to generate the weather data and send the messages to SQS [CQS_Weather_Madrid.py](https://github.com/eduardfores/CQS_Weather/blob/main/AWS_lambda/CQS_Weather_Madrid/CQS_Weather_Madrid.py). Remember to add ACCESS_KEY and SECRET_KEY.
+
+3. Create other lambda function to receive the messages from SQS and generate the .db files and save it in your S3 Bucket [CQS_Weather_SQLite3.py](https://github.com/eduardfores/CQS_Weather/tree/main/AWS_lambda/CQS_Weather_SQLite3), copy/paste all files inside the repository. Remember to add ACCESS_KEY and SECRET_KEY.
+
+4. To automate the functions create different events one for the writers of SQS and other for the reciver of SQS. You have to link them in the trigger of every lambda.
+
+With the step one you will have a serverless static website executing SQLite in the browser.
+
+
+<p align="right">(<a href="#top">back to top</a>)</p>
 
 <!-- LICENSE -->
 ## License
