@@ -6,9 +6,8 @@
 <br />
 <div align="center">
   <img src="https://user-images.githubusercontent.com/552629/76405509-87025300-6388-11ea-86c9-af882abb00bd.png" width="80" height="80" />
-  <a href="https://github.com/eduardfores/CQS_Weather/blob/main/README_IMGS/Amazon_Web_Services_Logo.png">
-    <img src="README_IMGS/Amazon_Web_Services_Logo.png" alt="Logo" width="80" height="80">
-  </a>
+  <img src="README_IMGS/Amazon_Web_Services_Logo.png" alt="Logo" width="80" height="80">
+  <img src="README_IMGS/openweather.png" width="80" height="80" />
 
   <h3 align="center">Serverless Weather in AWS with Edge-Computing </h3>
 
@@ -44,7 +43,7 @@
 <!-- ABOUT THE PROJECT -->
 ## About The Project
 
-The project contain one website connected to s3 to download the necessary database to show the weather in different places of the world (Madrid, London, Paris). The files donwload from the S3 are .db files (little files with databases in SQLite). These files are load in the SQLite wasm in the client site and this client process the database
+The project contain one website connected to s3 to download the necessary database to show the weather in different places of the world (Madrid, London, Paris). The files download from the S3 are .db files (little files with databases in SQLite). These files are load in the SQLite wasm in the client side and this client process the database
 in the browser to show the data.
 
 To simulate the IoT writers I create different lambda functions to send messages with the weather data to SQS and other lambda to receive all messages and create the .db file of the day execution.
@@ -52,12 +51,12 @@ To simulate the IoT writers I create different lambda functions to send messages
 So in this project there are:
 * Hosting Static web in S3
 * The web reads from S3 bucket the database.db files
-* SQLite executions in the client site
+* SQLite executions in the client side
 * SQLite creation files using python and save it in S3
 
 ```diff
 - The demo may be doesn't charge good the website because the first .db file searched is the current date. e.g. database08-04-2022.db
-- To execute this project change the name of the databasedd-mm-yyyy.db with the current date and add it in your S3 Bucket insite the /database directory
+- To execute this project change the name of the databasedd-mm-yyyy.db with the current date and add it in your S3 Bucket inside the /database directory
 ```
 <p align="right">(<a href="#top">back to top</a>)</p>
 
@@ -126,6 +125,14 @@ With the step one you will have a serverless static website executing SQLite in 
 
 
 <p align="right">(<a href="#top">back to top</a>)</p>
+
+## AWS Architecture
+
+_The Architecture can be expressed with the next diagram_
+
+<div align="center">
+    <img src="README_IMGS/AWS-architecture.png" alt="Diagram"/>
+</div>
 
 <!-- LICENSE -->
 ## License
